@@ -1,0 +1,7 @@
+{
+    "player_picture": "bar.png",
+    "initialX": 10,
+    "initialY": 250,
+    "width": 15,
+    "height": 50
+}
