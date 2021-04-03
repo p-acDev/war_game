@@ -1,7 +1,11 @@
 {
     "player_picture": "bar.png",
+    "playerName": "right",
     "initialX": 890,
     "initialY": 250,
     "width": 15,
-    "height": 50
+    "height": 50,
+    "keyUp": "p",
+    "keyDown": "m",
+    "fire": "l"
 }
