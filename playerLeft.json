@@ -1,11 +1,23 @@
 {
-    "player_picture": "bar.png",
+    "player_picture": "spaceship.png",
     "playerName": "left",
-    "initialX": 10,
+    "initialX": 40,
     "initialY": 250,
-    "width": 15,
-    "height": 50,
+    "displayPvX": 0,
+    "displayPvY": 10,
+    "width": 80,
+    "height": 76,
+    "velocity": 10,
+    "rotate": 270,
     "keyUp": "a",
     "keyDown": "q",
-    "fire": "s"
+    "keyFire": "s",
+    "PV": 4,
+    "fireGuns": {"1": {"xpos": 71, "ypos": 8},
+                 "2": {"xpos": 71, "ypos": 68}
+    },
+    "bulletSpeed": 5,
+    "bulletWidth": 5,
+    "bulletHeight": 5,
+    "bulletColor": "RED"
 }
