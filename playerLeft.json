@@ -16,7 +16,7 @@
     "fireGuns": {"1": {"xpos": 71, "ypos": 8},
                  "2": {"xpos": 71, "ypos": 68}
     },
-    "bulletSpeed": 5,
+    "bulletSpeed": 10,
     "bulletWidth": 5,
     "bulletHeight": 5,
     "bulletColor": "RED"

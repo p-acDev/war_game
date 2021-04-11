@@ -6,5 +6,11 @@
         "HEIGHT": 500
     },
 
-    "FPS": 60
+    "FPS": 60,
+
+    "Menu": {
+        "WIDTH": 300,
+        "HEIGHT": 400,
+        "TITLE": "War Game Menu"
+    }
 }

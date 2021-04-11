@@ -1,39 +1,41 @@
 import pygame
+import pygame_menu
 import pygame.freetype
 import json
 import os
 from key_corresp import KEYS
 pygame.init()
 
+
 class Player(pygame.Rect):
-    
+
     def __init__(self, player_profile):
-        
+
         with open(player_profile, "r") as f:
             self.profile = json.load(f)
-        
+
         self.player_image = pygame.image.load(os.path.join('assets',
                                                            self.profile["player_picture"]))
         self.player_image = pygame.transform.scale(self.player_image,(self.profile["width"],
                                                                       self.profile["height"]))
         self.player_image = pygame.transform.rotate(self.player_image, self.profile["rotate"])
-        
+
         self.name = self.profile["playerName"]
-        
+
         self.width = self.profile["width"]
         self.height = self.profile["height"]
-        
+
         self.initialX = self.profile["initialX"] - self.width / 2
         self.initialY = self.profile["initialY"] - self.height / 2
-        
+
         self.velocity = self.profile["velocity"]
-        
+
         self.x = self.initialX
         self.y = self.initialY
-        
+
         self.keyUp = self.profile["keyUp"]
         self.keyDown = self.profile["keyDown"]
-        
+
         self.bulletSpeed = self.profile["bulletSpeed"]
         self.keyFire = self.profile["keyFire"]
         self.bullets = []
@@ -41,57 +43,55 @@ class Player(pygame.Rect):
         self.bulletWidth = self.profile["bulletWidth"]
         self.bulletHeight = self.profile["bulletHeight"]
         self.bulletColor = self.profile["bulletColor"]
-        
+
         self.pv = self.profile["PV"]
 
-        
         self.dead = False
-        
+
     def move_player(self, keys_pressed, min_y, max_y):
-        
-        if (keys_pressed[KEYS[self.keyUp]]) and (self.y > min_y + self.velocity): # UP
+
+        if (keys_pressed[KEYS[self.keyUp]]) and (self.y > min_y + self.velocity):  # UP
             self.y -= self.velocity
-        elif (keys_pressed[KEYS[self.keyDown]]) and (self.y < max_y - self.velocity): # down
+        elif (keys_pressed[KEYS[self.keyDown]]) and (self.y < max_y - self.velocity):  # down
             self.y += self.velocity
-        
+
         return None
-    
+
     def fire(self, keys_pressed):
         if keys_pressed[KEYS[self.keyFire]]:
             for fireGunNumber in self.fireGuns.keys():
                 bullet = pygame.Rect(self.x + self.fireGuns[fireGunNumber]["xpos"],
                                      self.y + self.fireGuns[fireGunNumber]["ypos"],
                                      self.bulletWidth,
-                                     self.bulletWidth)                
-                if len(self.bullets) <= 5:
+                                     self.bulletWidth)
+                if len(self.bullets) <= 1:
                     self.bullets.append(bullet)
-        
+
         return None
-    
+
     def bullet_traj(self, x_min, x_max):
         for bullet in self.bullets:
             if self.name == "left":
                 bullet.x += self.bulletSpeed
-                
+
             elif self.name == "right":
                 bullet.x -= self.bulletSpeed
-                
+
             if (bullet.x < x_min) or (bullet.x > x_max):
                 self.bullets.remove(bullet)
-        
+
         return None
 
     def check_collision(self, other_player):
-        
+
         for bullet in other_player.bullets:
             if self.colliderect(bullet):
                 self.pv -= 1
                 other_player.bullets.remove(bullet)
-        
-        
+
         return None
-        
-    
+
+
 class WarGameUI:
     
     def __init__(self, config_file, color_data, player_profiles):
@@ -179,7 +179,7 @@ class WarGameUI:
             # handle player movement and fire
             for i, player in enumerate(self.players):
                 player.move_player(keys_pressed,
-                                   80, # to leave blank a line a top
+                                   80,  # to leave blank a line a top
                                    self.CONFIG["windowSettings"]["HEIGHT"] - self.players[0].height)
                 player.fire(keys_pressed)
                 player.bullet_traj(0, self.CONFIG["windowSettings"]["WIDTH"])
@@ -203,11 +203,11 @@ class WarGameUI:
 
            
 if __name__ == "__main__":
-    
+
     config_file = "./config.json"
     color_data = "./color_data.json"
-    
+
     player_profile_files = ["./playerLeft.json", "./playerRight.json"]
-    
+
     app = WarGameUI(config_file, color_data, player_profile_files)
     app.main_loop()
